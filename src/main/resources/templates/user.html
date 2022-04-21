@@ -9,13 +9,14 @@
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
     <!-- Title  -->
-    <title>Amado - Furniture Ecommerce Template | Shop</title>
+    <title>Amado - Furniture Ecommerce Template | Cart</title>
 
     <!-- Favicon  -->
-    <link rel="icon" th:href="@{/img/core-img/favicon.ico}">
+    <link rel="icon" href="img/core-img/favicon.ico">
 
     <!-- Core Style CSS -->
-    <link rel="stylesheet" th:href="@{/css/core-style.css}">
+    <link rel="stylesheet" href="css/core-style.css">
+    <link rel="stylesheet" th:href="style.css">
 
 </head>
 
@@ -29,9 +30,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="search-content">
-                    <form th:action="@{/search}" method="get">
+                    <form action="#" method="get">
                         <input type="search" name="search" id="search" placeholder="Type your keyword...">
-                        <button type="submit"><img th:src="@{/img/core-img/search.png}" alt=""></button>
+                        <button type="submit"><img src="img/core-img/search.png" alt=""></button>
                     </form>
                 </div>
             </div>
@@ -47,7 +48,7 @@
     <div class="mobile-nav">
         <!-- Navbar Brand -->
         <div class="amado-navbar-brand">
-            <a th:href="@{/index}"><img th:src="@{/img/core-img/logo.png}" alt=""></a>
+            <a href="index"><img src="img/core-img/logo.png" alt=""></a>
         </div>
         <!-- Navbar Toggler -->
         <div class="amado-navbar-toggler">
@@ -55,20 +56,75 @@
         </div>
     </div>
 
-    <!-- Header Area Start -->
     <header class="header-area clearfix" th:include="components/header::sidebar">
 
     </header>
-    <!-- Header Area End -->
 
-    <div class="amado_product_area section-padding-100">
+    <div class="cart-table-area section-padding-100">
         <div class="container-fluid">
-
             <div class="row">
+                <div class="col-12 col-lg-4">
+                    <div class="cart-title mt-50">
+                        <h2 th:text="${'Welcome '+ user.name}">Account details </h2>
+                    </div>
 
-                <!-- Single Product Area -->
+                    <div class="cart-table clearfix">
+                            <div class="form-group">
+                                <label>Full name</label>
+                                <input type="text" style="background-color:#ffffff; border-style:none;" disabled class="form-control" th:value="${user.name + ' ' + user.last}">
+                            </div>
+                            <div class="form-group">
+                                <label>Number</label>
+                                <input type="text" style="background-color:#ffffff; border-style:none;" disabled class="form-control" th:value="${user.number}">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="text" style="background-color:#ffffff; border-style:none;" disabled class="form-control" th:value="${user.email}">
+                            </div>
+                            <div class="form-group">
+                                <a th:href="@{/edit}"><input type="button"  class="btn btn-warning" value="Edit Account"></a>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-8">
+                    <div class="cart-title mt-50">
+                        <h2>Shopping Cart</h2>
+                    </div>
 
-
+                    <div class="cart-table clearfix">
+                        <table class="table table-responsive">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="cart:${carts}">
+                                <td class="cart_product_img">
+                                    <a th:href="@{${'/product/'+cart.product.id}}"><img th:src="@{${'/img/product/'+ cart.product.image}}" alt="Product"></a>
+                                </td>
+                                <td class="cart_product_desc">
+                                    <h5 th:text="${cart.product.name}">White Modern Chair</h5>
+                                </td>
+                                <td class="price">
+                                    <span th:text="${'$'+cart.product.price}">$130</span>
+                                </td>
+                                <td class="qty">
+                                    <div class="qty-btn d-flex">
+                                        <p>Qty</p>
+                                        <div class="quantity">
+                                            <input type="number" disabled class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" th:value="${cart.quantity}">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -94,9 +150,9 @@
 <!-- Bootstrap js -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
 <!-- Plugins js -->
-<script th:src="@{/js/plugins.js}"></script>
+<script src="js/plugins.js"></script>
 <!-- Active js -->
-<script th:src="@{/js/active.js}"></script>
+<script src="js/active.js"></script>
 
 </body>
 

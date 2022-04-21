@@ -1,9 +1,8 @@
 package com.amado.controler;
 
-import com.amado.service.brandService;
-import com.amado.service.cartService;
-import com.amado.service.categoryService;
-import com.amado.service.productService;
+import com.amado.model.cart;
+import com.amado.model.users;
+import com.amado.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +25,9 @@ public class pages {
     @Autowired
     com.amado.service.cartService cartService;
 
+    @Autowired
+    com.amado.service.userService userService;
+
     @GetMapping({"","/index","/"})
     public String home(Model model){
         model = common.getCommon(model);
@@ -46,6 +48,11 @@ public class pages {
         model = common.getCommon(model);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("carts",cartService.getByUser(auth.getName()));
+        double total=0;
+        for(cart c : cartService.getByUser(auth.getName())){
+            total += c.getQuantity() * c.getProduct().getPrice();
+        }
+        model.addAttribute("total",total);
         return "cart";
     }
 
@@ -53,6 +60,8 @@ public class pages {
     public String account(Model model){
         model = common.getCommon(model);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("user",userService.findByEmail(auth.getName()));
+        model.addAttribute("carts",cartService.getByUser(auth.getName()));
         return "user";
     }
 }

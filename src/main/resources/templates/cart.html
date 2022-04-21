@@ -93,7 +93,8 @@
                                             <div class="qty-btn d-flex">
                                                 <p>Qty</p>
                                                 <div class="quantity">
-                                                    <input type="number" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" th:value="${cart.quantity}">
+                                                    <input type="number" disabled class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" th:value="${cart.quantity}">
+                                                    <a th:href="@{${'/cart/delete/'+cart.id}}"><i class="fa fa-times-circle fa-2x" aria-hidden="true"></i></a>
                                                 </div>
                                             </div>
                                         </td>
@@ -106,9 +107,9 @@
                         <div class="cart-summary">
                             <h5>Cart Total</h5>
                             <ul class="summary-table">
-                                <li><span>subtotal:</span> <span>$140.00</span></li>
+                                <li><span>subtotal:</span> <span th:text="${'$'+total}"></span></li>
                                 <li><span>delivery:</span> <span>Free</span></li>
-                                <li><span>total:</span> <span>$140.00</span></li>
+                                <li><span>total:</span> <span th:text="${'$'+total}">$140.00</span></li>
                             </ul>
                             <div class="cart-btn mt-100">
                                 <a href="cart" class="btn amado-btn w-100">Checkout</a>
