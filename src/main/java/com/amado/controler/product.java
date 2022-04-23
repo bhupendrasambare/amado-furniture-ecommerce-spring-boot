@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+
 @Controller
 public class product {
 
@@ -42,6 +44,12 @@ public class product {
                              @RequestParam("quantity")int quantity){
         users user = userService.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
         cartService.create(new cart(0,quantity,user,productService.findById(id)));
+        return "redirect:/cart";
+    }
+
+    @GetMapping("/cart/delete/{id}")
+    public String deleteCart(@PathVariable("id")int id){
+        cartService.delete(id);
         return "redirect:/cart";
     }
 
